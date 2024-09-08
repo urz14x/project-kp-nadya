@@ -16,9 +16,8 @@ import {
 import { Input } from "@/Components/ui/input";
 import { Textarea } from "@/Components/ui/textarea";
 
-export default function Dashboard({ images }) {
+export default function Dashboard({ activities }) {
     const { auth } = usePage().props;
-    console.log(images);
     const { data, setData, errors, post, progress } = useForm({
         title: "",
         description: "",
@@ -28,8 +27,8 @@ export default function Dashboard({ images }) {
         e.preventDefault();
         post(route("admin.create.store"));
 
-        setData("title", '');
-        setData("description", '');
+        setData("title", "");
+        setData("description", "");
         setData("image", null);
     };
     return (
@@ -103,7 +102,12 @@ export default function Dashboard({ images }) {
                                                     className="w-full px-4 py-2"
                                                     label="Image"
                                                     name="image"
-                                                    onChange={(e) => setData("image", e.target.files[0])}
+                                                    onChange={(e) =>
+                                                        setData(
+                                                            "image",
+                                                            e.target.files[0]
+                                                        )
+                                                    }
                                                 />
                                                 <span className="text-red-600">
                                                     {errors.image}
@@ -116,7 +120,6 @@ export default function Dashboard({ images }) {
                                                                 progress.percentage
                                                             }
                                                         >
-
                                                             {
                                                                 progress.percentage
                                                             }
@@ -125,9 +128,11 @@ export default function Dashboard({ images }) {
                                                     </div>
                                                 )}
                                             </div>
-                                            <Button type="submit">
-                                                Submit
-                                            </Button>
+                                            <DrawerClose asChild>
+                                                <Button type="submit">
+                                                    Submit
+                                                </Button>
+                                            </DrawerClose>
 
                                             <Button variant="outline">
                                                 Cancel
@@ -137,7 +142,7 @@ export default function Dashboard({ images }) {
                                 </DrawerContent>
                             </Drawer>
 
-                            <TableAdmin posts={images} />
+                            <TableAdmin activities={activities} />
                         </div>
                     </div>
                 </div>

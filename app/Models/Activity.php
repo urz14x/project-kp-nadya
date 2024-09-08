@@ -2,17 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
-class Image extends Model
+class Activity extends Model
 {
     use HasFactory;
-    protected $table = 'images';
-    protected $fillable = [
-        'title', 'description', 'name'
-    ];
+    protected $table = "activities";
+    protected $guarded = [];
+
     protected function name()
     {
         return Attribute::make(

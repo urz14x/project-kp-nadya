@@ -1,4 +1,4 @@
-import { router } from "@inertiajs/react";
+import { Link, router } from "@inertiajs/react";
 import {
     Table,
     TableBody,
@@ -9,15 +9,15 @@ import {
     TableHeader,
     TableRow,
 } from "../Components/ui/table";
-import { Button } from "./ui/button";
+import { Button, buttonVariants } from "./ui/button";
 
-export function TableAdmin({ posts }) {
+export function TableAdmin({ activities }) {
     const deletePost = (id) => {
-        router.delete(`/kegiatan-hapus/${id}`);
+        router.delete(route('admin.delete', id));
     };
     return (
         <>
-            {posts.length > 0 ? (
+            {activities.length > 0 ? (
                 <Table>
                     <TableCaption>List data dari halaman kegiatan</TableCaption>
                     <TableHeader>
@@ -26,35 +26,43 @@ export function TableAdmin({ posts }) {
                             <TableHead>Nama Kegiatan</TableHead>
                             <TableHead>Deskripsi Kegiatan</TableHead>
                             <TableHead>Gambar</TableHead>
-                            <TableHead className="text-right">Aksi</TableHead>
+                            <TableHead>Aksi</TableHead>
                         </TableRow>
                     </TableHeader>
 
                     <TableBody>
-                        {posts.map((data, i) => (
-                            <TableRow>
+                        {activities.map((data, i) => (
+                            <TableRow key={i}>
                                 <TableCell className="font-medium">
                                     {data.id + i}
                                 </TableCell>
                                 <TableCell>{data.title}</TableCell>
-                                <TableCell className="line-clamp-3">
+                                <TableCell>
                                     {data.description}
                                 </TableCell>
                                 <TableCell>
                                     <img
-                                        src={`/upload/${data.name}`}
+                                        src={`/upload/${data.image}`}
                                         width="100px"
-                                        alt={data.name}
+                                        alt={data.image}
                                     />
                                 </TableCell>
-                                <TableCell className="text-right">
+                                <TableCell className="flex items-center gap-x-4">
                                     <Button
                                         onClick={() => deletePost(data.id)}
                                         variant="destructive"
                                     >
                                         Hapus
                                     </Button>
+                                    <Link as="button"
+                                       href={route('admin.edit', data.id)}
+                                       className={buttonVariants({ variant: "outline" })}
+
+                                    >
+                                        Edit
+                                    </Link>
                                 </TableCell>
+
                             </TableRow>
                         ))}
                     </TableBody>
